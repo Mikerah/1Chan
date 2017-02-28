@@ -1,14 +1,16 @@
 from django.db import models
 
 class Board(models.Model):
-    pass
-
-class User(models.Model):
-    pass
+    board_name = models.CharField(max_length=30)
     
 class Thread(models.Model):
-    pass
+    board = models.ForeignKey(Board)
+    thread_title = models.CharField(max_length=250)
+    author = models.CharField(max_length=100)
+    thread_post = models.TextField()
     
-class Replay(models.Model):
-    pass
+class Reply(models.Model):
+    thread = models.ForeignKey(Thread)
+    author = models.CharField(max_length=100)
+    reply = models.TextField()
     
