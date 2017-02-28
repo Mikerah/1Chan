@@ -1,8 +1,12 @@
 from django.forms import ModelForm
-from channels.models import Board, User, Thread, Reply
+from channels.models import Board, Thread, Reply
 
 class ThreadForm(ModelForm):
-    pass
+    class Meta:
+        model = Thread
+        fields = ['thread_title', 'author', 'thread_post']
     
 class ReplyForm(ModelForm):
-    pass
+    class Meta:
+        model = Reply
+        fields = ['author', 'reply']
