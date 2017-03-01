@@ -15,7 +15,7 @@
         </div>
         <div>
         {% for board in list_of_boards %}
-        <a>{{board}}</a>
+        <a href="{% url 'board' board.id %}">{{board}}</a>
         {% endfor %}
         </div>
         
