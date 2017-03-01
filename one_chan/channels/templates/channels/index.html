@@ -1,0 +1,23 @@
+{% load bootstrap3 %}
+{% bootstrap_css %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>1chan</title>
+    </head>
+    
+    <body>
+        <h1>1chan</h1>
+        <h3> Anonymous Textboard forum</h3>
+        <div>
+            <h2>Boards</h2>
+        </div>
+        <div>
+        {% for board in list_of_boards %}
+        <a>{{board}}</a>
+        {% endfor %}
+        </div>
+        
+    </body>
+</html>
