@@ -2,32 +2,40 @@
 {% bootstrap_css %}
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <title>1chan</title>
     </head>
     
     <body>
-        <h1>1chan</h1>
-        <h3> Anonymous Textboard forum</h3>
+        <div class="container">
+            <h1>1chan</h1>
+            <h3> Anonymous Textboard forum</h3>
+        </div>
         <div>
             <h2>{{ board.board_name }}</h2>
         </div>
+        <div class="form-group">
+            <form action="." method="post">
+                {% csrf_token %}
+                {{ thread_form }}
+                <input type="submit" value="Submit"/>
+            </form>
+        </div>
         <div>
-        <ul>
-        <li>
-            {% for thread in board.threads %}
-                <h4>{{thread}} by {{thread.author}}</h4>
-                <p>{{thread.thread_post}}</p>
-                <ul>
-                    {% for reply in thread.replies %}
-                    <li>{{ reply.reply }} by {{reply.author}}</li>
+            <ul class="unstyled">
+                <li >
+                    {% for thread in board.threads %}
+                        <h4>{{thread}} by {{thread.author}}</h4>
+                        <p>{{thread.thread_post}}</p>
+                        <ul class="unstyled">
+                            {% for reply in thread.replies %}
+                            <li>{{ reply.reply }} by {{reply.author}}</li>
+                            {% endfor %}
+                        </ul>
                     {% endfor %}
-                </ul>
-            {% endfor %}
-        </li>
-        </ul>
-        
+                </li>
+            </ul>
         </div>
         
         
