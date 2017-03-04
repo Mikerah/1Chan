@@ -5,6 +5,20 @@
 <html lang="en">
     <head>
         <title>1chan</title>
+        <script
+			  src="https://code.jquery.com/jquery-3.1.1.min.js"
+			  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+			  crossorigin="anonymous"></script>
+        <script type="text/javascript">
+        function reply() {
+            var x = document.getElementById('reply-form')
+            if ( x.style.display === 'none') {
+                x.style.display = 'block'
+            } else {
+                x.style.display = 'none'
+            }
+        }
+    </script>
     </head>
     
     <body>
@@ -19,25 +33,37 @@
             <form action="." method="post">
                 {% csrf_token %}
                 {{ thread_form }}
-                <input type="submit" value="Submit"/>
+                <input name="new_thread" type="submit" value="Submit"/>
             </form>
         </div>
         <div>
             <ul class="unstyled">
                 <li >
                     {% for thread in board.threads %}
-                        <h4>{{thread}} by {{thread.author}}</h4>
-                        <p>{{thread.thread_post}}</p>
-                        <ul class="unstyled">
-                            {% for reply in thread.replies %}
-                            <li>{{ reply.reply }} by {{reply.author}}</li>
-                            {% endfor %}
-                        </ul>
+                        <div>
+                            <div>
+                                <h4>{{thread}} by {{thread.author}}</h4>
+                                <button type="button" onclick="reply()">Reply</button>
+                                <p>{{thread.thread_post}}</p>
+                            </div>
+                            <div>
+                                <ul class="unstyled">
+                                    {% for reply in thread.replies %}
+                                    <li>{{ reply.reply }} by {{reply.author}}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>    
+                            <form id="reply-form" style="display: none;" action="." method="post">
+                                {% csrf_token %}
+                                {{ reply_form }}
+                            </form>
+                        </div>
+                        
                     {% endfor %}
                 </li>
             </ul>
         </div>
         
-        
+    
     </body>
 </html>
