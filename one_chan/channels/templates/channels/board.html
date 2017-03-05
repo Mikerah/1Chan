@@ -10,15 +10,16 @@
 			  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
 			  crossorigin="anonymous"></script>
         <script type="text/javascript">
-        function reply() {
+        function reply(thread_id) {
             var x = document.getElementById('reply-form')
+            x.elements["thread_id"].value = thread_id
             if ( x.style.display === 'none') {
                 x.style.display = 'block'
             } else {
                 x.style.display = 'none'
             }
         }
-    </script>
+        </script>
     </head>
     
     <body>
@@ -43,22 +44,25 @@
                         <div>
                             <div>
                                 <h4>{{thread}} by {{thread.author}}</h4>
-                                <button type="button" onclick="reply()">Reply</button>
+                                <button type="button" onclick="reply({{thread.id}})">Reply</button>
                                 <p>{{thread.thread_post}}</p>
                             </div>
                             <div>
-                                <ul class="unstyled">
+                                <ul>
                                     {% for reply in thread.replies %}
                                     <li>{{ reply.reply }} by {{reply.author}}</li>
                                     {% endfor %}
                                 </ul>
-                            </div>    
-                            <form id="reply-form" style="display: none;" action="." method="post">
-                                {% csrf_token %}
-                                {{ reply_form }}
-                            </form>
-                        </div>
-                        
+                            </div>   
+                            <div>
+                                <form id="reply-form" style="display: none;" action="." method="post">
+                                    {% csrf_token %}
+                                    {{ reply_form }}
+                                    <input name="thread_id" type="hidden">
+                                    <input name="new_reply" type="submit" value="submit"/>
+                                </form>
+                            </div>   
+                        </div>   
                     {% endfor %}
                 </li>
             </ul>
