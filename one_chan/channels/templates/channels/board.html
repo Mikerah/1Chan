@@ -1,5 +1,6 @@
 {% load bootstrap3 %}
-{% bootstrap_css %}
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,6 +10,9 @@
 			  src="https://code.jquery.com/jquery-3.1.1.min.js"
 			  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
 			  crossorigin="anonymous"></script>
+        {% bootstrap_css %}
+        {% bootstrap_javascript %}
+        <!--
         <script type="text/javascript">
         function reply(thread_id) {
             var x = document.getElementById('reply-form')
@@ -20,6 +24,7 @@
             }
         }
         </script>
+        -->
     </head>
     
     <body>
@@ -42,9 +47,9 @@
                 <li >
                     {% for thread in board.threads %}
                         <div>
-                            <div>
+                            <div id="thread-div">
                                 <h4>{{thread}} by {{thread.author}}</h4>
-                                <button type="button" onclick="reply({{thread.id}})">Reply</button>
+                                <!-- <button id="reply-button" type="button" onclick="reply({{thread.id}})" class="btn btn-primary">Reply</button> -->
                                 <p>{{thread.thread_post}}</p>
                             </div>
                             <div>
@@ -53,15 +58,15 @@
                                     <li>{{ reply.reply }} by {{reply.author}}</li>
                                     {% endfor %}
                                 </ul>
-                            </div>   
+                            </div>  
                             <div>
-                                <form id="reply-form" style="display: none;" action="." method="post">
+                                <form id="reply-form" action="." method="post">
                                     {% csrf_token %}
                                     {{ reply_form }}
-                                    <input name="thread_id" type="hidden">
+                                    <input name="thread_id" value="{{thread.id}}" type="hidden">
                                     <input name="new_reply" type="submit" value="submit"/>
                                 </form>
-                            </div>   
+                            </div>
                         </div>   
                     {% endfor %}
                 </li>
