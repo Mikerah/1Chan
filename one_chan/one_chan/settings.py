@@ -36,7 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'channels',
-    'bootstrap3'
+    'bootstrap3',
+    'widget_tweaks'
 ]
 
 MIDDLEWARE = [

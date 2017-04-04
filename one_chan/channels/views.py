@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import *
 from .forms import *
 
@@ -9,6 +10,17 @@ def index(request):
     
 def board(request, board_name):
     board = get_object_or_404(Board, board_name=board_name)
+    list_of_threads = board.get_threads()
+    
+    paginator = Paginator(list_of_threads, 3)
+    page = request.GET.get('page')
+    try:
+        threads = paginator.page(page)
+    except PageNotAnInteger:
+        threads = paginator.page(1)
+    except EmptyPage:
+        threads.paginator.page(paginator.num_pages)
+    
     if request.method == 'POST':
         if 'new_thread' in request.POST:
             new_thread_form = ThreadForm(request.POST)
@@ -32,5 +44,6 @@ def board(request, board_name):
     else:
         new_thread_form = ThreadForm()
         new_reply_form = ReplyForm()
-    context = {'board': board, 'thread_form': new_thread_form, 'reply_form': new_reply_form}
+        
+    context = {'board': board, 'thread_form': new_thread_form, 'reply_form': new_reply_form, 'threads':threads}
     return render(request, 'channels/board.html', context)
