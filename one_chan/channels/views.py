@@ -32,7 +32,6 @@ def board(request, board_name):
                 new_thread.save()
                 return HttpResponseRedirect('/{}'.format(board))
         elif 'new_reply' in request.POST:
-            print("In the right spot")
             new_reply_form = ReplyForm(request.POST)
             if new_reply_form.is_valid():
                 thread = Thread.objects.get(id=request.POST['thread_id'])
