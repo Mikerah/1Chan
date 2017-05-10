@@ -1,0 +1,1 @@
+web: python one_chan/manage.py runserver 0.0.0.0:$PORT
